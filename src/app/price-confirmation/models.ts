@@ -2,6 +2,8 @@ export interface Future {
   id: number;
   lots: number;
   price: number;
+  ccyMultiplier: number;
+  futuresPriceWithOffset: number;
 }
 
 export interface SubTranche {
@@ -9,6 +11,12 @@ export interface SubTranche {
   trancheNum: number;
   subTrancheNum: number;
   subTrancheDisplay: string;
-  lots: number;
-  price: number;
+  quantity: number;
+  pricedLots: number;
+  unpricedLots: number;
+  wap: number;
+  fPrem: number;
+  clientFuturesExLvl: number;
+  contractualDiff: number;
+  invoicePrice: number;
 }

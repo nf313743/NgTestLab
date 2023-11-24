@@ -13,6 +13,7 @@
             <th>Id</th>
             <th>Lots</th>
             <th>Price</th>
+            <th>Futures Price With Offset</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-f>
@@ -20,6 +21,7 @@
             <td>{{ f.id }}</td>
             <td>{{ f.lots }}</td>
             <td>{{ f.price }}</td>
+            <td>{{ f.futuresPriceWithOffset }}</td>
           </tr>
         </ng-template>
       </p-table>
@@ -51,15 +53,28 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
-            <th>Lots</th>
-            <th>Price</th>
+            <th>Quantity</th>
+            <th>Priced Lots</th>
+            <th>Unpriced Lots</th>
+            <th>WAP</th>
+            <th>Futures Prem</th>
+            <!-- ABS(ABS(pp.FuturesExecutionLevel) - ABS(pp.ClientFuturesExecutionLevel)) -->
+            <th>Client Futures ExLvl</th>
+            <th>Contractual Diff</th>
+            <th>Invoice Price</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-f>
           <tr>
             <td>{{ f.subTrancheDisplay }}</td>
-            <td>{{ f.lots }}</td>
-            <td>{{ f.price }}</td>
+            <td>{{ f.quantity }}</td>
+            <td>{{ f.pricedLots }}</td>
+            <td>{{ f.unpricedLots }}</td>
+            <td>{{ f.wap }}</td>
+            <td>{{ f.fPrem }}</td>
+            <td>{{ f.clientFuturesExLvl }}</td>
+            <td>{{ f.contractualDiff }}</td>
+            <td>{{ f.invoicePrice }}</td>
           </tr>
         </ng-template>
       </p-table>
@@ -67,10 +82,3 @@
   </div>
 </div>
 
-<!--
-id: 1,
-lots: 5,
-price: 678.4,
-subTrancheDisplay: '1A',
-subTrancheNum: 1,
-trancheNum: 1, -->
