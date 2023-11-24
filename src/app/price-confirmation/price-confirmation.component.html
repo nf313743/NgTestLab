@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="grid">
+    <div class="col-8">
+      <h3>Futures</h3>
+      <!-- Futures -->
+      <p-table
+        [value]="priceConfirmationService.getFutures()"
+        styleClass="p-datatable-striped"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Lots</th>
+            <th>Price</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-f>
+          <tr>
+            <td>{{ f.id }}</td>
+            <td>{{ f.lots }}</td>
+            <td>{{ f.price }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-4">
+      <!-- Buttons -->
+      <div class="card flex justify-content-center">
+        <form [formGroup]="formGroup">
+          Sub-Tranche:
+          <p-multiSelect
+            [options]="subTrancheOptions"
+            formControlName="selectedSubTranche"
+            optionLabel="subTrancheDisplay"
+            placeholder=""
+          ></p-multiSelect>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="grid mt-4">
+    <div class="col">
+      <!-- SubTranches -->
+      <h2>Sub-Tranches</h2>
+      <p-table
+        [value]="priceConfirmationService.getSubTranches()"
+        styleClass="p-datatable-striped"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Lots</th>
+            <th>Price</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-f>
+          <tr>
+            <td>{{ f.subTrancheDisplay }}</td>
+            <td>{{ f.lots }}</td>
+            <td>{{ f.price }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!--
+id: 1,
+lots: 5,
+price: 678.4,
+subTrancheDisplay: '1A',
+subTrancheNum: 1,
+trancheNum: 1, -->
