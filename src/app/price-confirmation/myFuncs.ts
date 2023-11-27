@@ -26,6 +26,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
             ...f,
             id: -1,
             lots: Math.abs(remainingLots),
+            splitFrom: f.id,
           };
           st.unpricedLots = 0;
 

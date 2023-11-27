@@ -24,7 +24,6 @@ export class PriceConfirmationComponent implements OnInit {
       subTrancheDisplay: x.subTrancheDisplay,
     }));
 
-
   formSubTranches: FormGroup = new FormGroup({
     subTranches: this.fb.array<SubTranche>([]),
   });
@@ -34,12 +33,16 @@ export class PriceConfirmationComponent implements OnInit {
   });
 
   viewModel$ = this.priceConfirmationService.combinedStream$.pipe(
-    map((sts) => {
-      const arr = sts.map((x) => toFormGroup(this.fb, x));
+    map((combo) => {
+      const futures = combo.futures;
+      const subTranches = combo.subTranches;
+
+      const arr = subTranches.map((x) => toFormGroup(this.fb, x));
       this.formSubTranches.setControl('subTranches', this.fb.array(arr));
 
       const vm = {
         form: this.formSubTranches,
+        futures: futures,
       };
 
       return vm;

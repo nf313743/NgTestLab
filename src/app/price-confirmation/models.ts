@@ -6,6 +6,7 @@ export interface Future {
   futuresPriceWithOffset: number;
   isAllocated: boolean;
   allocatedTo: string | null;
+  splitFrom: number | null;
 }
 
 export interface SubTranche {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { Future, SubTranche } from './models';
+import { attribute } from './myFuncs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,41 +9,40 @@ import { Future, SubTranche } from './models';
 export class PriceConfirmationService {
   constructor() {}
 
-  private backupSubTrancheSubject = new BehaviorSubject<SubTranche[]>(
-    this.getSubTranches()
-  ); // bad
+  private futureSubject = new BehaviorSubject<Future[]>(this.getFutures());
+  futureStream$ = this.futureSubject.asObservable();
 
-  backupData$ = this.backupSubTrancheSubject.asObservable();
+  private subTrancheSubject = new BehaviorSubject<SubTranche[]>(
+    this.getSubTranches()
+  );
+
+  subTrancheStream$ = this.subTrancheSubject.asObservable();
 
   private selectionSubject = new BehaviorSubject<number[] | null>(null);
   selectionStream$ = this.selectionSubject.asObservable();
 
-  combinedStream$: Observable<SubTranche[]> = combineLatest([
-    this.backupData$,
+  combinedStream$: Observable<Combo> = combineLatest([
+    this.futureStream$,
+    this.subTrancheStream$,
     this.selectionStream$,
   ]).pipe(
-    map(([subTranches, selected]) => {
-      const foo = subTranches.map((x) => Object.assign({}, x));
+    map(([futures, subTranches, selected]) => {
+      const futuresCopy = futures.map((x) => Object.assign({}, x));
 
-      if (selected) {
-        let futureSplits = [];
+      const subTrancheCopy = subTranches.map((x) => Object.assign({}, x));
 
-        selected.forEach((id) => {
-          const selectedSubTranche = foo.find((x) => x.id === id)!;
-          selectedSubTranche.wap = 900;
-          selectedSubTranche.isSelected = true;
+      if (!selected)
+        return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
 
-          /* What has to happen now is that when selection changes all of the Futures will be applied to the
-          // selected sub-tranches FIFO.
+      const selectedSubs = selected!.map(
+        (id) => subTrancheCopy.find((x) => x.id === id)!
+      );
 
-          e.g.
-          You have 12 lots to apply -> they all go onto 1A.  Lets do this one first.  Then, reduce 1A Unpriced Lots to 3. This will cause a split of the first future.
+      selectedSubs.forEach((x) => (x.isSelected = true));
 
-            */
-        });
-      }
+      attribute(futuresCopy, selectedSubs);
 
-      return foo;
+      return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
     })
   );
 
@@ -51,7 +51,7 @@ export class PriceConfirmationService {
   }
 
   reset() {
-    this.backupSubTrancheSubject.next(this.getSubTranches());
+    this.subTrancheSubject.next(this.getSubTranches());
   }
 
   getFutures(): Future[] {
@@ -64,6 +64,7 @@ export class PriceConfirmationService {
         futuresPriceWithOffset: 1,
         isAllocated: false,
         allocatedTo: null,
+        splitFrom: null,
       },
       {
         id: 2,
@@ -73,6 +74,7 @@ export class PriceConfirmationService {
         futuresPriceWithOffset: 1,
         isAllocated: false,
         allocatedTo: null,
+        splitFrom: null,
       },
       {
         id: 3,
@@ -82,6 +84,7 @@ export class PriceConfirmationService {
         futuresPriceWithOffset: 1,
         isAllocated: false,
         allocatedTo: null,
+        splitFrom: null,
       },
     ];
 
@@ -102,7 +105,7 @@ export class PriceConfirmationService {
         subTrancheDisplay: '1A',
         subTrancheNum: 1,
         trancheNum: 1,
-        unpricedLots: 45,
+        unpricedLots: 9,
         wap: 54353,
       },
       {
@@ -139,6 +142,11 @@ export class PriceConfirmationService {
 
     return subTranches;
   }
+}
+
+export interface Combo {
+  futures: Future[];
+  subTranches: SubTranche[];
 }
 
 /*

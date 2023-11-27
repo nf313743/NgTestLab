@@ -1,57 +1,62 @@
-<div class="mx-0 md:mx-8">
-  <div class="grid">
-    <div class="col">
-      <h3>Futures</h3>
-      <!-- Futures -->
-      <p-table
-        [value]="priceConfirmationService.getFutures()"
-        styleClass="p-datatable-striped"
-        [tableStyle]="{ 'min-width': '50rem' }"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Id</th>
-            <th>Lots</th>
-            <th>Price</th>
-            <th>Futures Price With Offset</th>
-            <th>Ccy Multiplier</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-f>
-          <tr>
-            <td>{{ f.id }}</td>
-            <td>{{ f.lots }}</td>
-            <td>{{ f.price }}</td>
-            <td>{{ f.futuresPriceWithOffset }}</td>
-            <td>{{ f.ccyMultiplier }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-  </div>
-
-  <div class="grid mt-4">
-    <div class="col">
-      <!-- Buttons -->
-      <div class="card flex">
-        <form [formGroup]="formSelection">
-          Sub-Tranche:
-          <p-multiSelect
-            [options]="subTrancheOptions"
-            formControlName="selectedSubTranche"
-            optionLabel="subTrancheDisplay"
-            placeholder=""
-          ></p-multiSelect>
-        </form>
+<ng-container *ngIf="viewModel$ | async as vm">
+  <div class="mx-0 md:mx-8">
+    <div class="grid">
+      <div class="col">
+        <h3>Futures</h3>
+        <!-- Futures -->
+        <p-table
+          [value]="vm.futures"
+          styleClass="p-datatable-striped"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Id</th>
+              <th>Split From</th>
+              <th>Lots</th>
+              <th>Price</th>
+              <th>Futures Price With Offset</th>
+              <th>Ccy Multiplier</th>
+              <th>Allocated To</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-f>
+            <tr>
+              <td>{{ f.id }}</td>
+              <td>{{ f.splitFrom }}</td>
+              <td>{{ f.lots }}</td>
+              <td>{{ f.price }}</td>
+              <td>{{ f.futuresPriceWithOffset }}</td>
+              <td>{{ f.ccyMultiplier }}</td>
+              <td>{{ f.allocatedTo }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
-  </div>
 
-  <div class="grid mt-4">
-    <div class="col">
-      <!-- SubTranches -->
-      <h2>Sub-Tranches</h2>
-      <ng-container *ngIf="viewModel$ | async as vm">
+    <div class="grid mt-4">
+      <div class="col">
+        <!-- Buttons -->
+        <div class="card flex">
+          <form [formGroup]="formSelection">
+            Sub-Tranche:
+            <p-multiSelect
+              [options]="subTrancheOptions"
+              formControlName="selectedSubTranche"
+              optionLabel="subTrancheDisplay"
+              placeholder=""
+            ></p-multiSelect>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid mt-4">
+      <div class="col">
+        <!-- SubTranches -->
+        <h2>Sub-Tranches</h2>
+
         <form [formGroup]="vm.form">
           <p-table
             [value]="subTrancheFormArray.controls"
@@ -94,7 +99,7 @@
             </ng-template>
           </p-table>
         </form>
-      </ng-container>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
