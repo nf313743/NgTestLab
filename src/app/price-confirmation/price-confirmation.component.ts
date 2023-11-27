@@ -24,6 +24,7 @@ export class PriceConfirmationComponent implements OnInit {
       subTrancheDisplay: x.subTrancheDisplay,
     }));
 
+
   formSubTranches: FormGroup = new FormGroup({
     subTranches: this.fb.array<SubTranche>([]),
   });

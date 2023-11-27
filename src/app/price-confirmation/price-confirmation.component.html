@@ -14,6 +14,7 @@
             <th>Lots</th>
             <th>Price</th>
             <th>Futures Price With Offset</th>
+            <th>Ccy Multiplier</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-f>
@@ -22,6 +23,7 @@
             <td>{{ f.lots }}</td>
             <td>{{ f.price }}</td>
             <td>{{ f.futuresPriceWithOffset }}</td>
+            <td>{{ f.ccyMultiplier }}</td>
           </tr>
         </ng-template>
       </p-table>

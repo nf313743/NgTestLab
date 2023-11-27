@@ -25,10 +25,20 @@ export class PriceConfirmationService {
       const foo = subTranches.map((x) => Object.assign({}, x));
 
       if (selected) {
+        let futureSplits = [];
+
         selected.forEach((id) => {
           const selectedSubTranche = foo.find((x) => x.id === id)!;
-          selectedSubTranche.wap = 9000;
+          selectedSubTranche.wap = 900;
           selectedSubTranche.isSelected = true;
+
+          /* What has to happen now is that when selection changes all of the Futures will be applied to the
+          // selected sub-tranches FIFO.
+
+          e.g.
+          You have 12 lots to apply -> they all go onto 1A.  Lets do this one first.  Then, reduce 1A Unpriced Lots to 3. This will cause a split of the first future.
+
+            */
         });
       }
 
@@ -52,6 +62,8 @@ export class PriceConfirmationService {
         price: 45.6,
         ccyMultiplier: 1,
         futuresPriceWithOffset: 1,
+        isAllocated: false,
+        allocatedTo: null,
       },
       {
         id: 2,
@@ -59,6 +71,8 @@ export class PriceConfirmationService {
         price: 45.6,
         ccyMultiplier: 1,
         futuresPriceWithOffset: 1,
+        isAllocated: false,
+        allocatedTo: null,
       },
       {
         id: 3,
@@ -66,6 +80,8 @@ export class PriceConfirmationService {
         price: 45.6,
         ccyMultiplier: 1,
         futuresPriceWithOffset: 1,
+        isAllocated: false,
+        allocatedTo: null,
       },
     ];
 

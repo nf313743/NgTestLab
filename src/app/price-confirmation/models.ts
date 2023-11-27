@@ -4,6 +4,8 @@ export interface Future {
   price: number;
   ccyMultiplier: number;
   futuresPriceWithOffset: number;
+  isAllocated: boolean;
+  allocatedTo: string | null;
 }
 
 export interface SubTranche {
