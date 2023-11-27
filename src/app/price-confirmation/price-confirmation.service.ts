@@ -65,6 +65,7 @@ export class PriceConfirmationService {
         isAllocated: false,
         allocatedTo: null,
         splitFrom: null,
+        priceLevelFees: 0,
       },
       {
         id: 2,
@@ -75,6 +76,7 @@ export class PriceConfirmationService {
         isAllocated: false,
         allocatedTo: null,
         splitFrom: null,
+        priceLevelFees: 0,
       },
       {
         id: 3,
@@ -85,6 +87,7 @@ export class PriceConfirmationService {
         isAllocated: false,
         allocatedTo: null,
         splitFrom: null,
+        priceLevelFees: 0,
       },
     ];
 

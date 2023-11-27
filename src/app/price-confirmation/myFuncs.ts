@@ -18,6 +18,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
           f.isAllocated = true;
           f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheDisplay;
           st.unpricedLots = st.unpricedLots - f.lots;
+          st.pricedLots = st.pricedLots + f.lots;
         } else {
           // We have to split the Future
 
@@ -29,7 +30,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
             splitFrom: f.id,
           };
           st.unpricedLots = 0;
-
+          st.pricedLots = st.pricedLots + f.lots;
           f.isAllocated = true;
           f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheDisplay;
 
@@ -37,6 +38,49 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
           futures.splice(i + 1, 0, newFuture);
         }
       }
+
+      /*** Running calcs ****/
+
+      const futuresAppliedToSubTranche = futures.filter((x) =>
+        x.allocatedTo?.includes(st.subTrancheDisplay)
+      );
+
+      const wap = Math.abs(
+        futuresAppliedToSubTranche.reduce(
+          (acc, next) => acc + next.lots * next.price * next.ccyMultiplier,
+          0
+        ) / futures.reduce((acc, next) => acc + next.lots, 0)
+      );
+
+      const clientFuturesExecutionLevel = Math.abs(
+        futuresAppliedToSubTranche.reduce(
+          (acc, next) =>
+            acc + next.lots * next.futuresPriceWithOffset * next.ccyMultiplier,
+          0
+        ) / futures.reduce((acc, next) => acc + next.lots, 0)
+      );
+
+      var zFeesAmount = futuresAppliedToSubTranche.reduce(
+        (acc, next) => acc + next.priceLevelFees,
+        0
+      );
+
+      const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
+
+      st.wap = wap;
+      st.clientFuturesExLvl = clientFuturesExecutionLevel;
+      st.contractualDiff = zFeesAmount;
+      st.invoicePrice = invoicePrice;
     });
   }
 }
+
+/**
+ * contractualDiff:
+    var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
+
+
+InvoicePrice:
+  var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
+  InvoicePrice = ClientFuturesExecutionLevel + zFeesAmount;
+ */

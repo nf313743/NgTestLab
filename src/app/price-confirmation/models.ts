@@ -7,6 +7,7 @@ export interface Future {
   isAllocated: boolean;
   allocatedTo: string | null;
   splitFrom: number | null;
+  priceLevelFees: number;
 }
 
 export interface SubTranche {
