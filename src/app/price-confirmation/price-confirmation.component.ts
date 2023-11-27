@@ -22,5 +22,19 @@ export class PriceConfirmationComponent implements OnInit {
     selectedSubTranche: new FormControl<SubTranche[] | null>(null),
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Listen to when a value on the drop down changes.
+    // The value will either be empty or a collection of subtranches
+    // If empty, restore unmodified Sub-Tranche values
+    // If there are items in the collection, do the calc.
+
+    this.formGroup
+      .get('selectedSubTranche')!
+      .valueChanges.subscribe(
+        (selectedSubTranche: { id: number; subTrancheDisplay: string }[]) => {
+          const ids = selectedSubTranche.map((x) => x.id);
+          this.priceConfirmationService.selectionChange(ids);
+        }
+      );
+  }
 }
