@@ -1,0 +1,4 @@
+> When SubTranche selected add select checkbox in table
+> Add ability to add/remove/edit Futures
+> Add ability to add/remove/edit SubTranches
+> Host it on Github
