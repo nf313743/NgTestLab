@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PriceConfirmationService } from './price-confirmation.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { map } from 'rxjs';
 import { SubTranche } from './models';
+import { PriceConfirmationService } from './price-confirmation.service';
 
 @Component({
   selector: 'app-price-confirmation',
@@ -9,7 +10,12 @@ import { SubTranche } from './models';
   styleUrls: ['./price-confirmation.component.css'],
 })
 export class PriceConfirmationComponent implements OnInit {
-  constructor(public priceConfirmationService: PriceConfirmationService) {}
+  constructor(
+    public priceConfirmationService: PriceConfirmationService,
+    private fb: FormBuilder
+  ) {}
+
+  console = console;
 
   subTrancheOptions = this.priceConfirmationService
     .getSubTranches()
@@ -18,17 +24,29 @@ export class PriceConfirmationComponent implements OnInit {
       subTrancheDisplay: x.subTrancheDisplay,
     }));
 
-  formGroup: FormGroup = new FormGroup({
+  formSubTranches: FormGroup = new FormGroup({
+    subTranches: this.fb.array<SubTranche>([]),
+  });
+
+  formSelection: FormGroup = new FormGroup({
     selectedSubTranche: new FormControl<SubTranche[] | null>(null),
   });
 
-  ngOnInit(): void {
-    // Listen to when a value on the drop down changes.
-    // The value will either be empty or a collection of subtranches
-    // If empty, restore unmodified Sub-Tranche values
-    // If there are items in the collection, do the calc.
+  viewModel$ = this.priceConfirmationService.combinedStream$.pipe(
+    map((sts) => {
+      const arr = sts.map((x) => toFormGroup(this.fb, x));
+      this.formSubTranches.setControl('subTranches', this.fb.array(arr));
 
-    this.formGroup
+      const vm = {
+        form: this.formSubTranches,
+      };
+
+      return vm;
+    })
+  );
+
+  ngOnInit(): void {
+    this.formSelection
       .get('selectedSubTranche')!
       .valueChanges.subscribe(
         (selectedSubTranche: { id: number; subTrancheDisplay: string }[]) => {
@@ -37,4 +55,18 @@ export class PriceConfirmationComponent implements OnInit {
         }
       );
   }
+
+  get subTrancheFormArray(): FormArray {
+    return this.formSubTranches.get('subTranches') as FormArray;
+  }
 }
+
+const toFormGroup = (
+  formBuilder: FormBuilder,
+  subTranche: SubTranche
+): FormGroup => {
+  const fg = formBuilder.group<SubTranche>({
+    ...subTranche,
+  });
+  return fg;
+};

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Future, SubTranche } from './models';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
+import { Future, SubTranche } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +28,7 @@ export class PriceConfirmationService {
         selected.forEach((id) => {
           const selectedSubTranche = foo.find((x) => x.id === id)!;
           selectedSubTranche.wap = 9000;
+          selectedSubTranche.isSelected = true;
         });
       }
 
@@ -74,6 +75,7 @@ export class PriceConfirmationService {
   getSubTranches(): SubTranche[] {
     const subTranches: SubTranche[] = [
       {
+        isSelected: false,
         id: 1,
         clientFuturesExLvl: 7,
         contractualDiff: 7,
@@ -88,6 +90,7 @@ export class PriceConfirmationService {
         wap: 54353,
       },
       {
+        isSelected: false,
         id: 2,
         clientFuturesExLvl: 7,
         contractualDiff: 7,
@@ -102,6 +105,7 @@ export class PriceConfirmationService {
         wap: 54353,
       },
       {
+        isSelected: false,
         id: 3,
         clientFuturesExLvl: 7,
         contractualDiff: 7,

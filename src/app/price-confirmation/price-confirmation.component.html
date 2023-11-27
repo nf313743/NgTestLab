@@ -32,7 +32,7 @@
     <div class="col">
       <!-- Buttons -->
       <div class="card flex">
-        <form [formGroup]="formGroup">
+        <form [formGroup]="formSelection">
           Sub-Tranche:
           <p-multiSelect
             [options]="subTrancheOptions"
@@ -49,42 +49,49 @@
     <div class="col">
       <!-- SubTranches -->
       <h2>Sub-Tranches</h2>
-      <ng-container
-        *ngIf="priceConfirmationService.combinedStream$ | async as subTrnaches"
-      >
-        <p-table
-          [value]="subTrnaches"
-          styleClass="p-datatable-striped"
-          [tableStyle]="{ 'min-width': '50rem' }"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Id</th>
-              <th>Quantity</th>
-              <th>Priced Lots</th>
-              <th>Unpriced Lots</th>
-              <th>WAP</th>
-              <th>Futures Prem</th>
-              <!-- ABS(ABS(pp.FuturesExecutionLevel) - ABS(pp.ClientFuturesExecutionLevel)) -->
-              <th>Client Futures ExLvl</th>
-              <th>Contractual Diff</th>
-              <th>Invoice Price</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-f>
-            <tr>
-              <td>{{ f.subTrancheDisplay }}</td>
-              <td>{{ f.quantity }}</td>
-              <td>{{ f.pricedLots }}</td>
-              <td>{{ f.unpricedLots }}</td>
-              <td>{{ f.wap }}</td>
-              <td>{{ f.fPrem }}</td>
-              <td>{{ f.clientFuturesExLvl }}</td>
-              <td>{{ f.contractualDiff }}</td>
-              <td>{{ f.invoicePrice }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+      <ng-container *ngIf="viewModel$ | async as vm">
+        <form [formGroup]="vm.form">
+          <p-table
+            [value]="subTrancheFormArray.controls"
+            styleClass="p-datatable-striped"
+            [tableStyle]="{ 'min-width': '50rem' }"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Priced Lots</th>
+                <th>Unpriced Lots</th>
+                <th>WAP</th>
+                <th>Futures Prem</th>
+                <!-- ABS(ABS(pp.FuturesExecutionLevel) - ABS(pp.ClientFuturesExecutionLevel)) -->
+                <th>Client Futures ExLvl</th>
+                <th>Contractual Diff</th>
+                <th>Invoice Price</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-f>
+              <tr>
+                <td>
+                  <p-checkbox
+                    [formControl]="f.controls.isSelected"
+                    [binary]="true"
+                  ></p-checkbox>
+                </td>
+                <td>{{ f.controls.subTrancheDisplay.value }}</td>
+                <td>{{ f.controls.quantity.value }}</td>
+                <td>{{ f.controls.pricedLots.value }}</td>
+                <td>{{ f.controls.unpricedLots.value }}</td>
+                <td>{{ f.controls.wap.value }}</td>
+                <td>{{ f.controls.fPrem.value }}</td>
+                <td>{{ f.controls.clientFuturesExLvl.value }}</td>
+                <td>{{ f.controls.contractualDiff.value }}</td>
+                <td>{{ f.controls.invoicePrice.value }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </form>
       </ng-container>
     </div>
   </div>

@@ -7,6 +7,7 @@ export interface Future {
 }
 
 export interface SubTranche {
+  isSelected: boolean;
   id: number;
   trancheNum: number;
   subTrancheNum: number;
