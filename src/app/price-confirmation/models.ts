@@ -4,10 +4,13 @@ export interface Future {
   price: number;
   ccyMultiplier: number;
   futuresPriceWithOffset: number;
+  productType: string;
+  prompt: string;
+  tradeDate: string;
+
   isAllocated: boolean;
   allocatedTo: string | null;
   splitFrom: number | null;
-  priceLevelFees: number;
 }
 
 export interface SubTranche {

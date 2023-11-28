@@ -60,10 +60,12 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
         ) / futures.reduce((acc, next) => acc + next.lots, 0)
       );
 
-      var zFeesAmount = futuresAppliedToSubTranche.reduce(
-        (acc, next) => acc + next.priceLevelFees,
-        0
-      );
+      // var zFeesAmount = futuresAppliedToSubTranche.reduce(
+      //   (acc, next) => acc + next.priceLevelFees,
+      //   0
+      // );
+
+      var zFeesAmount = 0;
 
       const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
 

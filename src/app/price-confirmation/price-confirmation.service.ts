@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
+import futuresJson from "../../assets/futures.json";
 import { Future, SubTranche } from './models';
 import { attribute } from './myFuncs';
 
@@ -55,42 +56,12 @@ export class PriceConfirmationService {
   }
 
   getFutures(): Future[] {
-    const futures: Future[] = [
-      {
-        id: 1,
-        lots: 4,
-        price: 45.6,
-        ccyMultiplier: 1,
-        futuresPriceWithOffset: 1,
-        isAllocated: false,
-        allocatedTo: null,
-        splitFrom: null,
-        priceLevelFees: 0,
-      },
-      {
-        id: 2,
-        lots: 4,
-        price: 45.6,
-        ccyMultiplier: 1,
-        futuresPriceWithOffset: 1,
-        isAllocated: false,
-        allocatedTo: null,
-        splitFrom: null,
-        priceLevelFees: 0,
-      },
-      {
-        id: 3,
-        lots: 4,
-        price: 45.6,
-        ccyMultiplier: 1,
-        futuresPriceWithOffset: 1,
-        isAllocated: false,
-        allocatedTo: null,
-        splitFrom: null,
-        priceLevelFees: 0,
-      },
-    ];
-
+    const futures: Future[] = futuresJson.map((x: any) => ({
+      ...x,
+      isAllocated: false,
+      allocatedTo: null,
+      splitFrom: null,
+    }));
     return futures;
   }
 
