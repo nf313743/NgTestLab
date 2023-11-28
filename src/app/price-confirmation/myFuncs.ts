@@ -16,7 +16,8 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
         if (remainingLots >= 0) {
           // then we can apply this
           f.isAllocated = true;
-          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheChar;
+          f.allocatedTo =
+            (f.allocatedTo ?? '') + st.trancheNum + st.subTrancheChar;
           st.unpricedLots = st.unpricedLots - f.lots;
           st.pricedLots = st.pricedLots + f.lots;
         } else {
@@ -32,7 +33,8 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
           st.unpricedLots = 0;
           st.pricedLots = st.pricedLots + f.lots;
           f.isAllocated = true;
-          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheChar;
+          f.allocatedTo =
+            (f.allocatedTo ?? '') + st.trancheNum + st.subTrancheChar;
 
           // Insert the new future as the next item in the array
           futures.splice(i + 1, 0, newFuture);

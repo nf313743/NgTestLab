@@ -36,8 +36,8 @@ export class PriceConfirmationService {
       if (!selectedTranches)
         return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
 
-      const selectedSubs = selectedTranches!.map(
-        (tranche) => subTrancheCopy.find((x) => x.trancheNum === tranche)!
+      const selectedSubs = selectedTranches!.flatMap(
+        (tranche) => subTrancheCopy.filter((x) => x.trancheNum === tranche)!
       );
 
       selectedSubs.forEach((x) => (x.isSelected = true));
