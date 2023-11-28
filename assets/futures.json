@@ -1,0 +1,332 @@
+[
+  {
+    "id": 525747,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-02-09T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 10.0,
+    "price": 453.0,
+    "futuresPriceWithOffset": 453.0
+  },
+  {
+    "id": 525748,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-02-09T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-05-01T00:00:00",
+    "lots": 20.0,
+    "price": 447.0,
+    "futuresPriceWithOffset": 447.0
+  },
+  {
+    "id": 525749,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-02-09T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 20.0,
+    "price": 442.0,
+    "futuresPriceWithOffset": 442.0
+  },
+  {
+    "id": 525750,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-02-09T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 20.0,
+    "price": 435.0,
+    "futuresPriceWithOffset": 435.0
+  },
+  {
+    "id": 565072,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-09-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 20.0,
+    "price": 487.5,
+    "futuresPriceWithOffset": 487.5
+  },
+  {
+    "id": 565073,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-09-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-05-01T00:00:00",
+    "lots": 20.0,
+    "price": 478.2,
+    "futuresPriceWithOffset": 478.2
+  },
+  {
+    "id": 565074,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-09-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 20.0,
+    "price": 470.2,
+    "futuresPriceWithOffset": 470.2
+  },
+  {
+    "id": 565075,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-09-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 20.0,
+    "price": 466.5,
+    "futuresPriceWithOffset": 466.5
+  },
+  {
+    "id": 565076,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-09-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-12-01T00:00:00",
+    "lots": 20.0,
+    "price": 469.0,
+    "futuresPriceWithOffset": 469.0
+  },
+  {
+    "id": 581339,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-11-18T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 20.0,
+    "price": 455.94,
+    "futuresPriceWithOffset": 455.94
+  },
+  {
+    "id": 581340,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-11-18T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-05-01T00:00:00",
+    "lots": 20.0,
+    "price": 452.575,
+    "futuresPriceWithOffset": 452.575
+  },
+  {
+    "id": 581341,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-11-18T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 20.0,
+    "price": 450.0,
+    "futuresPriceWithOffset": 450.0
+  },
+  {
+    "id": 581342,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-11-18T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 20.0,
+    "price": 448.0,
+    "futuresPriceWithOffset": 448.0
+  },
+  {
+    "id": 581343,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-11-18T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-12-01T00:00:00",
+    "lots": 20.0,
+    "price": 450.4,
+    "futuresPriceWithOffset": 450.4
+  },
+  {
+    "id": 616828,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-05-25T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 10.0,
+    "price": 664.8,
+    "futuresPriceWithOffset": 664.8
+  },
+  {
+    "id": 616894,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-05-25T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-05-01T00:00:00",
+    "lots": 10.0,
+    "price": 643.8,
+    "futuresPriceWithOffset": 643.8
+  },
+  {
+    "id": 616898,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-05-25T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 10.0,
+    "price": 619.0,
+    "futuresPriceWithOffset": 619.0
+  },
+  {
+    "id": 623696,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-05-01T00:00:00",
+    "lots": 20.0,
+    "price": 617.0,
+    "futuresPriceWithOffset": 617.0
+  },
+  {
+    "id": 623698,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 20.0,
+    "price": 623.7,
+    "futuresPriceWithOffset": 623.7
+  },
+  {
+    "id": 623718,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-12-01T00:00:00",
+    "lots": 20.0,
+    "price": 586.2,
+    "futuresPriceWithOffset": 586.2
+  },
+  {
+    "id": 623736,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 10.0,
+    "price": 608.5,
+    "futuresPriceWithOffset": 608.5
+  },
+  {
+    "id": 623739,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-08-01T00:00:00",
+    "lots": 10.0,
+    "price": 609.0,
+    "futuresPriceWithOffset": 609.0
+  },
+  {
+    "id": 623743,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 3.0,
+    "price": 596.4,
+    "futuresPriceWithOffset": 596.4
+  },
+  {
+    "id": 623781,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 10.0,
+    "price": 597.7,
+    "futuresPriceWithOffset": 597.7
+  },
+  {
+    "id": 623802,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-27T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-10-01T00:00:00",
+    "lots": 17.0,
+    "price": 595.0,
+    "futuresPriceWithOffset": 595.0
+  },
+  {
+    "id": 624756,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-06-28T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-12-01T00:00:00",
+    "lots": 10.0,
+    "price": 581.9,
+    "futuresPriceWithOffset": 581.9
+  },
+  {
+    "id": 643607,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-09-29T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2023-12-01T00:00:00",
+    "lots": -8.0,
+    "price": 703.1,
+    "futuresPriceWithOffset": 703.1
+  },
+  {
+    "id": 643635,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-09-29T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 8.0,
+    "price": 701.3,
+    "futuresPriceWithOffset": 701.3
+  },
+  {
+    "id": 643755,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-09-29T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2023-12-01T00:00:00",
+    "lots": 8.0,
+    "price": 476.04,
+    "futuresPriceWithOffset": 476.04
+  },
+  {
+    "id": 643759,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-09-29T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2023-12-01T00:00:00",
+    "lots": 2.0,
+    "price": 396.04,
+    "futuresPriceWithOffset": 396.04
+  },
+  {
+    "id": 645500,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-10-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 2.0,
+    "price": 704.1,
+    "futuresPriceWithOffset": 704.1
+  },
+  {
+    "id": 645504,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2023-10-02T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2023-12-01T00:00:00",
+    "lots": -2.0,
+    "price": 706.2,
+    "futuresPriceWithOffset": 706.2
+  },
+  {
+    "id": 650673,
+    "ccyMultiplier": 1.0,
+    "tradeDate": "2022-02-09T00:00:00",
+    "productType": "Sugar #5",
+    "prompt": "2024-03-01T00:00:00",
+    "lots": 10.0,
+    "price": 453.0,
+    "futuresPriceWithOffset": 453.0
+  }
+]
