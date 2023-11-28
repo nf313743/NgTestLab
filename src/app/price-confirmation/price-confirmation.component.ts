@@ -17,19 +17,18 @@ export class PriceConfirmationComponent implements OnInit {
 
   console = console;
 
-  subTrancheOptions = this.priceConfirmationService
-    .getSubTranches()
-    .map((x) => ({
-      id: x.id,
-      subTrancheDisplay: x.subTrancheDisplay,
-    }));
+  trancheOptions = [
+    ...new Set(
+      this.priceConfirmationService.getSubTranches().map((x) => x.trancheNum)
+    ),
+  ];
 
   formSubTranches: FormGroup = new FormGroup({
     subTranches: this.fb.array<SubTranche>([]),
   });
 
   formSelection: FormGroup = new FormGroup({
-    selectedSubTranche: new FormControl<SubTranche[] | null>(null),
+    selectedTranche: new FormControl<SubTranche[] | null>(null),
   });
 
   viewModel$ = this.priceConfirmationService.combinedStream$.pipe(
@@ -51,13 +50,10 @@ export class PriceConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.formSelection
-      .get('selectedSubTranche')!
-      .valueChanges.subscribe(
-        (selectedSubTranche: { id: number; subTrancheDisplay: string }[]) => {
-          const ids = selectedSubTranche.map((x) => x.id);
-          this.priceConfirmationService.selectionChange(ids);
-        }
-      );
+      .get('selectedTranche')!
+      .valueChanges.subscribe((tranches: number[]) => {
+        this.priceConfirmationService.selectionChange(tranches);
+      });
   }
 
   get subTrancheFormArray(): FormArray {

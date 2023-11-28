@@ -14,17 +14,21 @@ export interface Future {
 }
 
 export interface SubTranche {
-  isSelected: boolean;
   id: number;
   trancheNum: number;
   subTrancheNum: number;
-  subTrancheDisplay: string;
+  subTrancheChar: string;
+  begTime:string;
+  endTime:string;
+  hedgeMonth: string;
   quantity: number;
   pricedLots: number;
   unpricedLots: number;
   wap: number;
-  fPrem: number;
-  clientFuturesExLvl: number;
-  contractualDiff: number;
+  futuresPremium: number;
+  clientFuturesExecutionLevel: number;
+  contractualDifference: number;
   invoicePrice: number;
+
+  isSelected: boolean;
 }

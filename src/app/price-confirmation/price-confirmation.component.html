@@ -42,11 +42,10 @@
         <!-- Buttons -->
         <div class="card flex">
           <form [formGroup]="formSelection">
-            Sub-Tranche:
+            Tranche:
             <p-multiSelect
-              [options]="subTrancheOptions"
-              formControlName="selectedSubTranche"
-              optionLabel="subTrancheDisplay"
+              [options]="trancheOptions"
+              formControlName="selectedTranche"
               placeholder=""
             ></p-multiSelect>
           </form>
@@ -88,14 +87,19 @@
                     [binary]="true"
                   ></p-checkbox>
                 </td>
-                <td>{{ f.controls.subTrancheDisplay.value }}</td>
+                <td>
+                  {{
+                    f.controls.trancheNum.value +
+                      f.controls.subTrancheChar.value
+                  }}
+                </td>
                 <td>{{ f.controls.quantity.value }}</td>
                 <td>{{ f.controls.pricedLots.value }}</td>
                 <td>{{ f.controls.unpricedLots.value }}</td>
                 <td>{{ f.controls.wap.value }}</td>
-                <td>{{ f.controls.fPrem.value }}</td>
-                <td>{{ f.controls.clientFuturesExLvl.value }}</td>
-                <td>{{ f.controls.contractualDiff.value }}</td>
+                <td>{{ f.controls.futuresPremium.value }}</td>
+                <td>{{ f.controls.clientFuturesExecutionLevel.value }}</td>
+                <td>{{ f.controls.contractualDifference.value }}</td>
                 <td>{{ f.controls.invoicePrice.value }}</td>
               </tr>
             </ng-template>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import futuresJson from "../../assets/futures.json";
+import futuresJson from '../../assets/futures.json';
+import subTranchesJson from '../../assets/subTranches.json';
 import { Future, SubTranche } from './models';
 import { attribute } from './myFuncs';
 
@@ -27,16 +28,16 @@ export class PriceConfirmationService {
     this.subTrancheStream$,
     this.selectionStream$,
   ]).pipe(
-    map(([futures, subTranches, selected]) => {
+    map(([futures, subTranches, selectedTranches]) => {
       const futuresCopy = futures.map((x) => Object.assign({}, x));
 
       const subTrancheCopy = subTranches.map((x) => Object.assign({}, x));
 
-      if (!selected)
+      if (!selectedTranches)
         return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
 
-      const selectedSubs = selected!.map(
-        (id) => subTrancheCopy.find((x) => x.id === id)!
+      const selectedSubs = selectedTranches!.map(
+        (tranche) => subTrancheCopy.find((x) => x.trancheNum === tranche)!
       );
 
       selectedSubs.forEach((x) => (x.isSelected = true));
@@ -47,12 +48,8 @@ export class PriceConfirmationService {
     })
   );
 
-  selectionChange(ids: number[]) {
-    this.selectionSubject.next(ids);
-  }
-
-  reset() {
-    this.subTrancheSubject.next(this.getSubTranches());
+  selectionChange(tranche: number[]) {
+    this.selectionSubject.next(tranche);
   }
 
   getFutures(): Future[] {
@@ -66,53 +63,12 @@ export class PriceConfirmationService {
   }
 
   getSubTranches(): SubTranche[] {
-    const subTranches: SubTranche[] = [
-      {
+    const subTranches: SubTranche[] = subTranchesJson.map<SubTranche>(
+      (x: any) => ({
+        ...x,
         isSelected: false,
-        id: 1,
-        clientFuturesExLvl: 7,
-        contractualDiff: 7,
-        fPrem: 4,
-        invoicePrice: 4,
-        pricedLots: 5,
-        quantity: 45,
-        subTrancheDisplay: '1A',
-        subTrancheNum: 1,
-        trancheNum: 1,
-        unpricedLots: 9,
-        wap: 54353,
-      },
-      {
-        isSelected: false,
-        id: 2,
-        clientFuturesExLvl: 7,
-        contractualDiff: 7,
-        fPrem: 4,
-        invoicePrice: 4,
-        pricedLots: 5,
-        quantity: 45,
-        subTrancheDisplay: '1B',
-        subTrancheNum: 2,
-        trancheNum: 1,
-        unpricedLots: 45,
-        wap: 54353,
-      },
-      {
-        isSelected: false,
-        id: 3,
-        clientFuturesExLvl: 7,
-        contractualDiff: 7,
-        fPrem: 4,
-        invoicePrice: 4,
-        pricedLots: 5,
-        quantity: 45,
-        subTrancheDisplay: '2A',
-        subTrancheNum: 1,
-        trancheNum: 2,
-        unpricedLots: 45,
-        wap: 54353,
-      },
-    ];
+      })
+    );
 
     return subTranches;
   }

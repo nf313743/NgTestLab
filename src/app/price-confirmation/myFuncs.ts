@@ -16,7 +16,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
         if (remainingLots >= 0) {
           // then we can apply this
           f.isAllocated = true;
-          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheDisplay;
+          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheChar;
           st.unpricedLots = st.unpricedLots - f.lots;
           st.pricedLots = st.pricedLots + f.lots;
         } else {
@@ -32,7 +32,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
           st.unpricedLots = 0;
           st.pricedLots = st.pricedLots + f.lots;
           f.isAllocated = true;
-          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheDisplay;
+          f.allocatedTo = (f.allocatedTo ?? '') + st.subTrancheChar;
 
           // Insert the new future as the next item in the array
           futures.splice(i + 1, 0, newFuture);
@@ -42,7 +42,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
       /*** Running calcs ****/
 
       const futuresAppliedToSubTranche = futures.filter((x) =>
-        x.allocatedTo?.includes(st.subTrancheDisplay)
+        x.allocatedTo?.includes(st.subTrancheChar)
       );
 
       const wap = Math.abs(
@@ -70,8 +70,8 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
       const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
 
       st.wap = wap;
-      st.clientFuturesExLvl = clientFuturesExecutionLevel;
-      st.contractualDiff = zFeesAmount;
+      st.clientFuturesExecutionLevel = clientFuturesExecutionLevel;
+      st.contractualDifference = zFeesAmount;
       st.invoicePrice = invoicePrice;
     });
   }
