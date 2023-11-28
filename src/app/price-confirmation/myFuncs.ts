@@ -62,12 +62,7 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
         ) / futures.reduce((acc, next) => acc + next.lots, 0)
       );
 
-      // var zFeesAmount = futuresAppliedToSubTranche.reduce(
-      //   (acc, next) => acc + next.priceLevelFees,
-      //   0
-      // );
-
-      var zFeesAmount = 0;
+      var zFeesAmount = st.contractualDifference; // ?
 
       const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
 
@@ -78,13 +73,3 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
     });
   }
 }
-
-/**
- * contractualDiff:
-    var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
-
-
-InvoicePrice:
-  var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
-  InvoicePrice = ClientFuturesExecutionLevel + zFeesAmount;
- */

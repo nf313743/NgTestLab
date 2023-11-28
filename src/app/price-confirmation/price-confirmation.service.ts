@@ -78,21 +78,3 @@ export interface Combo {
   futures: Future[];
   subTranches: SubTranche[];
 }
-
-/*
-Calc rules
-
-WAP:
-  wap =  Math.Abs(futures.Sum(x => x.Lots * x.FuturePrice * x.CcyMultiplier) / futures.Sum(x => x.Lots));
-
-ClientFuturesExecutionLevel:
- ClientFuturesExecutionLevel = Math.Abs(futures.Sum(x => x.Lots * x.FuturesPriceWithOffset * x.CcyMultiplier) / futures.Sum(x => x.Lots));
-
-contractualDiff:
-    var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
-
-
-InvoicePrice:
-  var zFeesAmount = Fees.Where(x => x.IsPriceLevelFee).Sum(x => x.Amount);
-  InvoicePrice = ClientFuturesExecutionLevel + zFeesAmount;
-*/
