@@ -59,7 +59,7 @@ SELECT
     , unpricedLots = pp.Lots --COALESCE(pp.Lots - #Wap.Lots, pp.Lots, 0)
     , wap = 0--ISNULL(#Wap.Wap, 0)
     , futuresPremium = ABS(ABS(pp.FuturesExecutionLevel) - ABS(pp.ClientFuturesExecutionLevel))
-    , clientFuturesExecutionLevel = pp.ClientFuturesExecutionLevel
+    , clientFuturesExecutionLevel = 0 --pp.ClientFuturesExecutionLevel
     , PricedPols = ISNULL(#Wap.Lots, 0)  -- This is very likey wrong.  Awaiting feedback
     , UnpricedPols = ISNULL(pp.Lots - #Wap.Wap, 0)
     , PolsLevel = CASE
@@ -69,7 +69,7 @@ SELECT
     , PolsScale = ps.Name
     , AvailableTonnage = ISNULL(cf.AvailableTonnage, 0)
     , contractualDifference = tp.PriceDiff
-    , invoicePrice = pp.InvoicePrice
+    , invoicePrice = 0 -- pp.InvoicePrice
 INTO #SubTrancheData
 FROM
     [dbo].[physicalposition] pp
