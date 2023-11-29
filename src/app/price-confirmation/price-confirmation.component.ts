@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MenuItem, MessageService } from 'primeng/api';
 import { map } from 'rxjs';
 import { Future, SubTranche } from './models';
 import { PriceConfirmationService } from './price-confirmation.service';
@@ -12,10 +13,38 @@ import { PriceConfirmationService } from './price-confirmation.service';
 export class PriceConfirmationComponent implements OnInit {
   constructor(
     public priceConfirmationService: PriceConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   console = console;
+
+  priceAverageItems: MenuItem[] = [
+    {
+      label: 'Selected',
+      icon: 'pi pi-refresh',
+      command: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Price Average',
+          detail: 'Priced Averaged Selected',
+        });
+        //this.update();
+      },
+    },
+    {
+      label: 'Contract',
+      icon: 'pi pi-refresh',
+      command: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Price Average',
+          detail: 'Priced Averaged Contract',
+        });
+        //this.update();
+      },
+    },
+  ];
 
   trancheOptions = [
     ...new Set(
@@ -75,7 +104,7 @@ export class PriceConfirmationComponent implements OnInit {
     this.formSelection
       .get('selectedTranche')!
       .valueChanges.subscribe((tranches: number[]) => {
-        this.priceConfirmationService.selectionTrancheChange (tranches);
+        this.priceConfirmationService.selectionTrancheChange(tranches);
       });
 
     this.subTrancheFormArray.valueChanges.subscribe((x) => console.log(x));
