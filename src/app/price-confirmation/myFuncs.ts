@@ -4,6 +4,8 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
   for (let i = 0; i < futures.length; i++) {
     const f = futures[i];
 
+    if (!f.isSelected) continue;
+
     subTranches.forEach((st) => {
       if (f.isAllocated) return;
 

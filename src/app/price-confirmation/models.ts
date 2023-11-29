@@ -8,6 +8,7 @@ export interface Future {
   prompt: string;
   tradeDate: string;
 
+  isSelected: boolean;
   isAllocated: boolean;
   allocatedTo: string | null;
   splitFrom: number | null;
@@ -18,8 +19,8 @@ export interface SubTranche {
   trancheNum: number;
   subTrancheNum: number;
   subTrancheChar: string;
-  begTime:string;
-  endTime:string;
+  begTime: string;
+  endTime: string;
   hedgeMonth: string;
   quantity: number;
   pricedLots: number;

@@ -20,16 +20,23 @@ export class PriceConfirmationService {
 
   subTrancheStream$ = this.subTrancheSubject.asObservable();
 
-  private selectionSubject = new BehaviorSubject<number[] | null>(null);
-  selectionStream$ = this.selectionSubject.asObservable();
+  private selectionTrancheSubject = new BehaviorSubject<number[] | null>(null);
+  selectionTrancheStream$ = this.selectionTrancheSubject.asObservable();
+
+  private selectionFutureSubject = new BehaviorSubject<number[] | null>(null);
+  selectionFutureStream$ = this.selectionFutureSubject.asObservable();
 
   combinedStream$: Observable<Combo> = combineLatest([
     this.futureStream$,
     this.subTrancheStream$,
-    this.selectionStream$,
+    this.selectionTrancheStream$,
+    this.selectionFutureStream$,
   ]).pipe(
-    map(([futures, subTranches, selectedTranches]) => {
+    map(([futures, subTranches, selectedTranches, selectedFutures]) => {
       const futuresCopy = futures.map((x) => Object.assign({}, x));
+      futuresCopy.forEach((x) => {
+        if (selectedFutures?.includes(x.id)) x.isSelected = true;
+      });
 
       const subTrancheCopy = subTranches.map((x) => Object.assign({}, x));
 
@@ -48,13 +55,18 @@ export class PriceConfirmationService {
     })
   );
 
-  selectionChange(tranche: number[]) {
-    this.selectionSubject.next(tranche);
+  selectionSubTrancheChange(tranches: number[]) {
+    this.selectionTrancheSubject.next(tranches);
+  }
+
+  selectionFutureChange(futureIds: number[]) {
+    this.selectionFutureSubject.next(futureIds);
   }
 
   getFutures(): Future[] {
     const futures: Future[] = futuresJson.map((x: any) => ({
       ...x,
+      isSelected: false,
       isAllocated: false,
       allocatedTo: null,
       splitFrom: null,
