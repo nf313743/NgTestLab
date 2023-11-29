@@ -1,3 +1,5 @@
 > Add ability to add/remove/edit Futures
 > Add ability to add/remove/edit SubTranches
-> Deselecting manually causes a recalc
+- Add Price Avg buttons
+    - Contract
+    - Selected

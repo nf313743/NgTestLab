@@ -53,6 +53,15 @@ export class PriceConfirmationComponent implements OnInit {
       const arrSt = subTranches.map((x) => toSubTrancheFormGroup(this.fb, x));
       this.formSubTranches.setControl('subTranches', this.fb.array(arrSt));
 
+      this.subTrancheFormArray.valueChanges.subscribe(
+        (subTranches: SubTranche[]) => {
+          const ids = subTranches
+            .filter((x) => x.isSelected)
+            .map((x: SubTranche) => x.id);
+          this.priceConfirmationService.selectionSubTrancheChange(ids);
+        }
+      );
+
       const vm = {
         subTrancheForm: this.formSubTranches,
         futuresForm: this.formFutures,
@@ -66,8 +75,10 @@ export class PriceConfirmationComponent implements OnInit {
     this.formSelection
       .get('selectedTranche')!
       .valueChanges.subscribe((tranches: number[]) => {
-        this.priceConfirmationService.selectionSubTrancheChange(tranches);
+        this.priceConfirmationService.selectionTrancheChange (tranches);
       });
+
+    this.subTrancheFormArray.valueChanges.subscribe((x) => console.log(x));
   }
 
   get subTrancheFormArray(): FormArray {

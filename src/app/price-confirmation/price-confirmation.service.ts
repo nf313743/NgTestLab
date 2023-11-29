@@ -44,7 +44,7 @@ export class PriceConfirmationService {
         return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
 
       const selectedSubs = selectedTranches!.flatMap(
-        (tranche) => subTrancheCopy.filter((x) => x.trancheNum === tranche)!
+        (id) => subTrancheCopy.filter((x) => x.id === id)!
       );
 
       selectedSubs.forEach((x) => (x.isSelected = true));
@@ -55,8 +55,18 @@ export class PriceConfirmationService {
     })
   );
 
-  selectionSubTrancheChange(tranches: number[]) {
-    this.selectionTrancheSubject.next(tranches);
+  selectionSubTrancheChange(subTrancheIds: number[]) {
+    this.selectionTrancheSubject.next(subTrancheIds);
+  }
+
+  selectionTrancheChange(tranches: number[]) {
+    const subTrancheIds = tranches.flatMap((trancheNum) =>
+      this.subTrancheSubject.value
+        .filter((x) => x.trancheNum === trancheNum)
+        .map((x) => x.id)
+    );
+
+    this.selectionSubTrancheChange(subTrancheIds);
   }
 
   selectionFutureChange(futureIds: number[]) {
