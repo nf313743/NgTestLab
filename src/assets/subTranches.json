@@ -12,14 +12,14 @@
     "unpricedLots": 60,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 511.743333,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 60.0000,
+    "UnpricedPols": -451.743333,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 3000.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 519.293333
+    "invoicePrice": 0
   },
   {
     "id": 168399,
@@ -34,14 +34,14 @@
     "unpricedLots": 30,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 476.000000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 30.0000,
+    "UnpricedPols": -446.000000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 1500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 483.550000
+    "invoicePrice": 0
   },
   {
     "id": 172816,
@@ -56,14 +56,14 @@
     "unpricedLots": 10,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 664.800000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 10.0000,
+    "UnpricedPols": -654.800000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 672.350000
+    "invoicePrice": 0
   },
   {
     "id": 152067,
@@ -78,14 +78,14 @@
     "unpricedLots": 60,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 505.525000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 60.0000,
+    "UnpricedPols": -445.525000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 3000.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 513.075000
+    "invoicePrice": 0
   },
   {
     "id": 168398,
@@ -100,14 +100,14 @@
     "unpricedLots": 30,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 533.400000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 30.0000,
+    "UnpricedPols": -503.400000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 1500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 540.950000
+    "invoicePrice": 0
   },
   {
     "id": 152068,
@@ -122,14 +122,14 @@
     "unpricedLots": 60,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 500.250000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 60.0000,
+    "UnpricedPols": -440.250000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 3000.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 507.800000
+    "invoicePrice": 0
   },
   {
     "id": 168400,
@@ -144,14 +144,14 @@
     "unpricedLots": 30,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 519.800000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 30.0000,
+    "UnpricedPols": -489.800000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 1500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 527.350000
+    "invoicePrice": 0
   },
   {
     "id": 152069,
@@ -166,14 +166,14 @@
     "unpricedLots": 60,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 503.236667,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 60.0000,
+    "UnpricedPols": -443.236666,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 3000.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 510.786667
+    "invoicePrice": 0
   },
   {
     "id": 168401,
@@ -188,14 +188,14 @@
     "unpricedLots": 30,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 489.233333,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 30.0000,
+    "UnpricedPols": -459.233333,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 1500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 496.783333
+    "invoicePrice": 0
   },
   {
     "id": 160726,
@@ -210,14 +210,14 @@
     "unpricedLots": 40,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 518.300000,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 40.0000,
+    "UnpricedPols": -478.300000,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 2000.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 525.850000
+    "invoicePrice": 0
   },
   {
     "id": 168402,
@@ -232,13 +232,13 @@
     "unpricedLots": 30,
     "wap": 0,
     "futuresPremium": 0.000000,
-    "clientFuturesExecutionLevel": 506.633333,
-    "PricedPols": 0.0000,
-    "UnpricedPols": 0.000000,
+    "clientFuturesExecutionLevel": 0,
+    "PricedPols": 30.0000,
+    "UnpricedPols": -476.633333,
     "PolsLevel": 0.00000000000000000,
     "PolsScale": null,
     "AvailableTonnage": 1500.0000,
     "contractualDifference": 0.000000,
-    "invoicePrice": 514.183333
+    "invoicePrice": 0
   }
 ]

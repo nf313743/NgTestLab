@@ -49,29 +49,33 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
         x.allocatedTo?.includes(st.subTrancheChar)
       );
 
-      const wap = Math.abs(
-        futuresAppliedToSubTranche.reduce(
-          (acc, next) => acc + next.lots * next.price * next.ccyMultiplier,
-          0
-        ) / futures.reduce((acc, next) => acc + next.lots, 0)
-      );
-
-      const clientFuturesExecutionLevel = Math.abs(
-        futuresAppliedToSubTranche.reduce(
-          (acc, next) =>
-            acc + next.lots * next.futuresPriceWithOffset * next.ccyMultiplier,
-          0
-        ) / futures.reduce((acc, next) => acc + next.lots, 0)
+      const clientFuturesExecutionLevel = calcWap(
+        futuresAppliedToSubTranche,
+        (x) => x.futuresPriceWithOffset
       );
 
       var zFeesAmount = st.contractualDifference; // ?
 
       const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
 
-      st.wap = wap;
-      st.clientFuturesExecutionLevel = clientFuturesExecutionLevel;
-      st.contractualDifference = zFeesAmount;
+      st.wap = calcWap(futuresAppliedToSubTranche, (x) => x.price);
+      st.clientFuturesExecutionLevel = st.contractualDifference = zFeesAmount;
       st.invoicePrice = invoicePrice;
     });
   }
+}
+
+function calcWap(futures: Future[], priceFn: (arg: Future) => number): number {
+  const denominator = futures.reduce((acc, next) => acc + next.lots, 0);
+
+  if (denominator === 0) return 0;
+
+  const wap = Math.abs(
+    futures.reduce(
+      (acc, next) => acc + next.lots * priceFn(next) * next.ccyMultiplier,
+      0
+    ) / futures.reduce((acc, next) => acc + next.lots, 0)
+  );
+
+  return wap;
 }
