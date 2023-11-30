@@ -26,33 +26,39 @@ export class PriceConfirmationService {
   private selectionFutureSubject = new BehaviorSubject<number[] | null>(null);
   selectionFutureStream$ = this.selectionFutureSubject.asObservable();
 
+  private priceAvgSubject = new BehaviorSubject<boolean>(false);
+  priceAvgStream$ = this.priceAvgSubject.asObservable();
+
   combinedStream$: Observable<Combo> = combineLatest([
     this.futureStream$,
     this.subTrancheStream$,
     this.selectionTrancheStream$,
     this.selectionFutureStream$,
+    this.priceAvgStream$,
   ]).pipe(
-    map(([futures, subTranches, selectedTranches, selectedFutures]) => {
-      const futuresCopy = futures.map((x) => Object.assign({}, x));
-      futuresCopy.forEach((x) => {
-        if (selectedFutures?.includes(x.id)) x.isSelected = true;
-      });
+    map(
+      ([futures, subTranches, selectedTranches, selectedFutures, priceAvg]) => {
+        const futuresCopy = futures.map((x) => Object.assign({}, x));
+        futuresCopy.forEach((x) => {
+          if (selectedFutures?.includes(x.id)) x.isSelected = true;
+        });
 
-      const subTrancheCopy = subTranches.map((x) => Object.assign({}, x));
+        const subTrancheCopy = subTranches.map((x) => Object.assign({}, x));
 
-      if (!selectedTranches)
+        if (!selectedTranches)
+          return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
+
+        const selectedSubs = selectedTranches!.flatMap(
+          (id) => subTrancheCopy.filter((x) => x.id === id)!
+        );
+
+        selectedSubs.forEach((x) => (x.isSelected = true));
+
+        attribute(futuresCopy, selectedSubs, priceAvg);
+
         return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
-
-      const selectedSubs = selectedTranches!.flatMap(
-        (id) => subTrancheCopy.filter((x) => x.id === id)!
-      );
-
-      selectedSubs.forEach((x) => (x.isSelected = true));
-
-      attribute(futuresCopy, selectedSubs);
-
-      return { futures: futuresCopy, subTranches: subTrancheCopy } as Combo;
-    })
+      }
+    )
   );
 
   selectionSubTrancheChange(subTrancheIds: number[]) {
@@ -71,6 +77,10 @@ export class PriceConfirmationService {
 
   selectionFutureChange(futureIds: number[]) {
     this.selectionFutureSubject.next(futureIds);
+  }
+
+  emitPriceAvg(value: boolean) {
+    this.priceAvgSubject.next(value);
   }
 
   getFutures(): Future[] {

@@ -21,6 +21,18 @@ export class PriceConfirmationComponent implements OnInit {
 
   priceAverageItems: MenuItem[] = [
     {
+      label: 'FIFO',
+      icon: 'pi pi-refresh',
+      command: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'FIFO',
+          detail: 'FIFO applied',
+        });
+        this.priceConfirmationService.emitPriceAvg(false);
+      },
+    },
+    {
       label: 'Selected',
       icon: 'pi pi-refresh',
       command: () => {
@@ -29,7 +41,7 @@ export class PriceConfirmationComponent implements OnInit {
           summary: 'Price Average',
           detail: 'Priced Averaged Selected',
         });
-        //this.update();
+        this.priceConfirmationService.emitPriceAvg(true);
       },
     },
     {
@@ -37,9 +49,9 @@ export class PriceConfirmationComponent implements OnInit {
       icon: 'pi pi-refresh',
       command: () => {
         this.messageService.add({
-          severity: 'success',
+          severity: 'error',
           summary: 'Price Average',
-          detail: 'Priced Averaged Contract',
+          detail: 'Not yet implemented',
         });
         //this.update();
       },

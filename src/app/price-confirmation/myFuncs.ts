@@ -1,6 +1,10 @@
 import { Future, SubTranche } from './models';
 
-export function attribute(futures: Future[], subTranches: SubTranche[]) {
+export function attribute(
+  futures: Future[],
+  subTranches: SubTranche[],
+  isPriceAverageSelected: boolean
+) {
   for (let i = 0; i < futures.length; i++) {
     const f = futures[i];
 
@@ -63,6 +67,36 @@ export function attribute(futures: Future[], subTranches: SubTranche[]) {
       st.invoicePrice = invoicePrice;
     });
   }
+
+  if (isPriceAverageSelected) {
+    priceAverageSelected(futures, subTranches);
+  }
+}
+
+function priceAverageSelected(
+  futures: Future[],
+  subTranches: SubTranche[]
+): void {
+  futures = futures.filter((x) => x.isAllocated);
+  subTranches = subTranches.filter((st) =>
+    futures.some((f) =>
+      f.allocatedTo?.includes(st.trancheNum + st.subTrancheChar)
+    )
+  );
+
+  const wap = calcWap(futures, (x) => x.price);
+  const clientFuturesExecutionLevel = calcWap(
+    futures,
+    (x) => x.futuresPriceWithOffset
+  );
+
+  subTranches.forEach((st) => {
+    st.wap = wap;
+    st.clientFuturesExecutionLevel = clientFuturesExecutionLevel;
+    var zFeesAmount = st.contractualDifference; // ?
+    st.clientFuturesExecutionLevel = st.contractualDifference = zFeesAmount;
+    st.invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
+  });
 }
 
 function calcWap(futures: Future[], priceFn: (arg: Future) => number): number {
