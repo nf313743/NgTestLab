@@ -1,4 +1,4 @@
-import { Future, SubTranche } from './models';
+import { Future, PriceAvgValues, SubTranche } from './models';
 
 export function attribute(
   futures: Future[],
@@ -7,8 +7,6 @@ export function attribute(
 ) {
   for (let i = 0; i < futures.length; i++) {
     const f = futures[i];
-
-    if (!f.isSelected) continue;
 
     subTranches.forEach((st) => {
       if (f.isAllocated) return;
@@ -21,11 +19,7 @@ export function attribute(
         // If remainingLots is > 0 you know the f.lots fits into it
         if (remainingLots >= 0) {
           // then we can apply this
-          f.isAllocated = true;
-          f.allocatedTo =
-            (f.allocatedTo ?? '') + st.trancheNum + st.subTrancheChar;
-          st.unpricedLots = st.unpricedLots - f.lots;
-          st.pricedLots = st.pricedLots + f.lots;
+          st.addFuture(f);
         } else {
           // We have to split the Future
 
@@ -36,53 +30,40 @@ export function attribute(
             lots: Math.abs(remainingLots),
             splitFrom: f.id,
           };
-          st.unpricedLots = 0;
-          st.pricedLots = st.pricedLots + f.lots;
-          f.isAllocated = true;
-          f.allocatedTo =
-            (f.allocatedTo ?? '') + st.trancheNum + st.subTrancheChar;
+
+          // Should be st.unpricedLots = 0;
+
+          st.addFuture(f);
 
           // Insert the new future as the next item in the array
           futures.splice(i + 1, 0, newFuture);
         }
       }
-
-      /*** Running calcs ****/
-
-      const futuresAppliedToSubTranche = futures.filter((x) =>
-        x.allocatedTo?.includes(st.subTrancheChar)
-      );
-
-      const clientFuturesExecutionLevel = calcWap(
-        futuresAppliedToSubTranche,
-        (x) => x.futuresPriceWithOffset
-      );
-
-      var zFeesAmount = st.contractualDifference; // ?
-
-      const invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
-
-      st.wap = calcWap(futuresAppliedToSubTranche, (x) => x.price);
-      st.clientFuturesExecutionLevel = st.contractualDifference = zFeesAmount;
-      st.invoicePrice = invoicePrice;
     });
   }
 
   if (isPriceAverageSelected) {
-    priceAverageSelected(futures, subTranches);
+    priceAverageSelected(subTranches);
   }
 }
 
-function priceAverageSelected(
-  futures: Future[],
-  subTranches: SubTranche[]
-): void {
-  futures = futures.filter((x) => x.isAllocated);
-  subTranches = subTranches.filter((st) =>
-    futures.some((f) =>
-      f.allocatedTo?.includes(st.trancheNum + st.subTrancheChar)
-    )
-  );
+export function unAttribute(futures: Future[], subTranches: SubTranche[]) {
+  // For each future remove from existing.  They can always be re-added after.
+
+  subTranches.forEach((st) => {
+    futures.forEach((f) => {
+      st.removeFuture(f);
+    });
+  });
+
+  futures.forEach((f) => {
+    f.isAllocated = false;
+    f.allocatedTo = '';
+  });
+}
+
+function priceAverageSelected(subTranches: SubTranche[]): void {
+  const futures = subTranches.flatMap((st) => st.futures);
 
   const wap = calcWap(futures, (x) => x.price);
   const clientFuturesExecutionLevel = calcWap(
@@ -90,16 +71,20 @@ function priceAverageSelected(
     (x) => x.futuresPriceWithOffset
   );
 
+  const values: PriceAvgValues = {
+    clientFuturesExecutionLevel: clientFuturesExecutionLevel,
+    wap: wap,
+  };
+
   subTranches.forEach((st) => {
-    st.wap = wap;
-    st.clientFuturesExecutionLevel = clientFuturesExecutionLevel;
-    var zFeesAmount = st.contractualDifference; // ?
-    st.clientFuturesExecutionLevel = st.contractualDifference = zFeesAmount;
-    st.invoicePrice = clientFuturesExecutionLevel + zFeesAmount;
+    st.setFromPriceAvg(values);
   });
 }
 
-function calcWap(futures: Future[], priceFn: (arg: Future) => number): number {
+export function calcWap(
+  futures: Future[],
+  priceFn: (arg: Future) => number
+): number {
   const denominator = futures.reduce((acc, next) => acc + next.lots, 0);
 
   if (denominator === 0) return 0;

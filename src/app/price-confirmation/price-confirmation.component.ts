@@ -60,7 +60,9 @@ export class PriceConfirmationComponent implements OnInit {
 
   trancheOptions = [
     ...new Set(
-      this.priceConfirmationService.getSubTranches().map((x) => x.trancheNum)
+      this.priceConfirmationService
+        .getAllData()
+        .subTranches.map((x) => x.trancheNum)
     ),
   ];
 
@@ -106,6 +108,7 @@ export class PriceConfirmationComponent implements OnInit {
       const vm = {
         subTrancheForm: this.formSubTranches,
         futuresForm: this.formFutures,
+        priceAvgMode: combo.priceAvgMode,
       };
 
       return vm;
@@ -118,8 +121,6 @@ export class PriceConfirmationComponent implements OnInit {
       .valueChanges.subscribe((tranches: number[]) => {
         this.priceConfirmationService.selectionTrancheChange(tranches);
       });
-
-    this.subTrancheFormArray.valueChanges.subscribe((x) => console.log(x));
   }
 
   get subTrancheFormArray(): FormArray {
@@ -135,8 +136,23 @@ const toSubTrancheFormGroup = (
   formBuilder: FormBuilder,
   subTranche: SubTranche
 ): FormGroup => {
-  const fg = formBuilder.group<SubTranche>({
-    ...subTranche,
+  const fg = formBuilder.group({
+    id: subTranche.id,
+    trancheNum: subTranche.trancheNum,
+    subTrancheNum: subTranche.subTrancheNum,
+    subTrancheChar: subTranche.subTrancheChar,
+    begTime: subTranche.begTime,
+    endTime: subTranche.endTime,
+    hedgeMonth: subTranche.hedgeMonth,
+    quantity: subTranche.quantity,
+    pricedLots: subTranche.pricedLots,
+    unpricedLots: subTranche.unpricedLots,
+    wap: subTranche.wap,
+    futuresPremium: subTranche.futuresPremium,
+    clientFuturesExecutionLevel: subTranche.clientFuturesExecutionLevel,
+    contractualDifference: subTranche.contractualDifference,
+    invoicePrice: subTranche.invoicePrice,
+    isSelected: subTranche.isSelected,
   });
   return fg;
 };

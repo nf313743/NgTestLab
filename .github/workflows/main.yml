@@ -3,7 +3,7 @@ name: Github Pages Deploy
 on:
   push:
     branches:
-      - "master"
+      - "with-pre-selection"
 
 permissions:
   contents: write
