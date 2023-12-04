@@ -3,7 +3,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MenuItem, MessageService } from 'primeng/api';
 import { map } from 'rxjs';
 import { Future, SubTranche } from './models';
-import { PriceConfirmationService } from './price-confirmation.service';
+import {
+  PriceAverageMethod,
+  PriceConfirmationService,
+} from './price-confirmation.service';
 
 @Component({
   selector: 'app-price-confirmation',
@@ -29,7 +32,7 @@ export class PriceConfirmationComponent implements OnInit {
           summary: 'FIFO',
           detail: 'FIFO applied',
         });
-        this.priceConfirmationService.emitPriceAvg(false);
+        this.priceConfirmationService.emitPriceAvg(PriceAverageMethod.Fifo);
       },
     },
     {
@@ -41,7 +44,7 @@ export class PriceConfirmationComponent implements OnInit {
           summary: 'Price Average',
           detail: 'Priced Averaged Selected',
         });
-        this.priceConfirmationService.emitPriceAvg(true);
+        this.priceConfirmationService.emitPriceAvg(PriceAverageMethod.Selected);
       },
     },
     {
@@ -49,11 +52,11 @@ export class PriceConfirmationComponent implements OnInit {
       icon: 'pi pi-refresh',
       command: () => {
         this.messageService.add({
-          severity: 'error',
+          severity: 'success',
           summary: 'Price Average',
-          detail: 'Not yet implemented',
+          detail: 'Price Average Contract',
         });
-        //this.update();
+        this.priceConfirmationService.emitPriceAvg(PriceAverageMethod.Contract);
       },
     },
   ];
@@ -105,10 +108,11 @@ export class PriceConfirmationComponent implements OnInit {
         }
       );
 
+
       const vm = {
         subTrancheForm: this.formSubTranches,
         futuresForm: this.formFutures,
-        priceAvgMode: combo.priceAvgMode,
+        priceAvgMethod: toPriceAveStr(combo.priceAvgMethod),
       };
 
       return vm;
@@ -166,3 +170,14 @@ const toFuturesFormGroup = (
   });
   return fg;
 };
+
+function toPriceAveStr(priceAvgMethod: PriceAverageMethod): string {
+  switch (priceAvgMethod) {
+    case PriceAverageMethod.Fifo:
+      return 'Fifo';
+    case PriceAverageMethod.Selected:
+      return 'Selected';
+    default:
+      return 'Contract';
+  }
+}

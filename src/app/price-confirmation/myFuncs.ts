@@ -1,49 +1,52 @@
 import { Future, PriceAvgValues, SubTranche } from './models';
+import { PriceAverageMethod } from './price-confirmation.service';
 
 export function attribute(
   futures: Future[],
   subTranches: SubTranche[],
-  isPriceAverageSelected: boolean
+  priceAvgMethod: PriceAverageMethod
 ) {
   for (let i = 0; i < futures.length; i++) {
     const f = futures[i];
 
-    subTranches.forEach((st) => {
-      if (f.isAllocated) return;
+    subTranches
+      .filter((x) => x.isSelected)
+      .forEach((st) => {
+        if (f.isAllocated) return;
 
-      // Check if there is still something price
-      if (st.unpricedLots > 0) {
-        const remainingLots = st.unpricedLots - f.lots;
-        // remainingLots = 6 - 9 -> 3 needs to be split off
+        // Check if there is still something price
+        if (st.unpricedLots > 0) {
+          const remainingLots = st.unpricedLots - f.lots;
+          // remainingLots = 6 - 9 -> 3 needs to be split off
 
-        // If remainingLots is > 0 you know the f.lots fits into it
-        if (remainingLots >= 0) {
-          // then we can apply this
-          st.addFuture(f);
-        } else {
-          // We have to split the Future
+          // If remainingLots is > 0 you know the f.lots fits into it
+          if (remainingLots >= 0) {
+            // then we can apply this
+            st.addFuture(f);
+          } else {
+            // We have to split the Future
 
-          f.lots = st.unpricedLots;
-          const newFuture: Future = {
-            ...f,
-            id: -1,
-            lots: Math.abs(remainingLots),
-            splitFrom: f.id,
-          };
+            f.lots = st.unpricedLots;
+            const newFuture: Future = {
+              ...f,
+              id: -1,
+              lots: Math.abs(remainingLots),
+              splitFrom: f.id,
+            };
 
-          // Should be st.unpricedLots = 0;
+            st.addFuture(f);
 
-          st.addFuture(f);
-
-          // Insert the new future as the next item in the array
-          futures.splice(i + 1, 0, newFuture);
+            // Insert the new future as the next item in the array
+            futures.splice(i + 1, 0, newFuture);
+          }
         }
-      }
-    });
+      });
   }
 
-  if (isPriceAverageSelected) {
+  if (priceAvgMethod === PriceAverageMethod.Selected) {
     priceAverageSelected(subTranches);
+  } else if (priceAvgMethod === PriceAverageMethod.Contract) {
+    priceAverageContract(subTranches);
   }
 }
 
@@ -63,7 +66,31 @@ export function unAttribute(futures: Future[], subTranches: SubTranche[]) {
 }
 
 function priceAverageSelected(subTranches: SubTranche[]): void {
-  const futures = subTranches.flatMap((st) => st.futures);
+  const futures = subTranches
+    .filter((x) => x.isSelected)
+    .flatMap((st) => st.futures);
+
+  const wap = calcWap(futures, (x) => x.price);
+  const clientFuturesExecutionLevel = calcWap(
+    futures,
+    (x) => x.futuresPriceWithOffset
+  );
+
+  const values: PriceAvgValues = {
+    clientFuturesExecutionLevel: clientFuturesExecutionLevel,
+    wap: wap,
+  };
+
+  subTranches.forEach((st) => {
+    st.setFromPriceAvg(values);
+  });
+}
+
+function priceAverageContract(subTranches: SubTranche[]): void {
+
+  const futures = subTranches
+    //.filter((x) => x.isSelected) -- Is the only difference this bit?
+    .flatMap((st) => st.futures);
 
   const wap = calcWap(futures, (x) => x.price);
   const clientFuturesExecutionLevel = calcWap(

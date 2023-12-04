@@ -34,20 +34,26 @@ export class PriceConfirmationService {
   private selectionFutureSubject = new BehaviorSubject<number[]>([]);
   selectionFutureStream$ = this.selectionFutureSubject.asObservable();
 
-  private priceAvgSubject = new BehaviorSubject<boolean>(false);
-  priceAvgStream$ = this.priceAvgSubject.asObservable();
+  private priceAvgMethodSubject = new BehaviorSubject<PriceAverageMethod>(
+    PriceAverageMethod.Fifo
+  );
+  priceAvgMethodStream$ = this.priceAvgMethodSubject.asObservable();
 
   combinedStream$: Observable<Combo> = combineLatest([
     this.futureStream$,
     this.subTrancheStream$,
     this.selectionTrancheStream$,
     this.selectionFutureStream$,
-    this.priceAvgStream$,
+    this.priceAvgMethodStream$,
   ]).pipe(
     map(
-      ([futures, subTranches, selectedTranches, selectedFutures, priceAvg]) => {
-        const priceAvgMode = priceAvg ? 'Selected' : 'FIFO';
-
+      ([
+        futures,
+        subTranches,
+        selectedSubTranches,
+        selectedFutures,
+        priceAvgMethod,
+      ]) => {
         const futuresCopy = futures.map((x) => Object.assign({}, x));
         futuresCopy.forEach((x) => {
           if (selectedFutures?.includes(x.id)) x.isSelected = true;
@@ -55,29 +61,29 @@ export class PriceConfirmationService {
 
         const subTrancheCopy = subTranches.map((x) => x.clone());
 
-        const selectedSubs = selectedTranches!.flatMap((id) => {
+        if (this.anyItemsSelected(selectedFutures, selectedSubTranches))
+          return {
+            futures: futuresCopy,
+            subTranches: subTrancheCopy,
+            priceAvgMethod: priceAvgMethod,
+          } as Combo;
+
+        selectedSubTranches!.forEach((id) => {
           const foo = subTrancheCopy.filter((x) => x.id === id)!;
           foo.forEach((x) => (x.isSelected = true));
           return foo;
         });
 
-        if (selectedTranches.length === 0 || selectedFutures.length === 0)
-          return {
-            futures: futuresCopy,
-            subTranches: subTrancheCopy,
-            priceAvgMode: priceAvgMode,
-          } as Combo;
-
         const selectedFuturesCopy = futuresCopy.filter((x) => x.isSelected)!;
 
         unAttribute(selectedFuturesCopy, subTrancheCopy);
 
-        attribute(selectedFuturesCopy, selectedSubs, priceAvg);
+        attribute(selectedFuturesCopy, subTrancheCopy, priceAvgMethod);
 
         return {
           futures: futuresCopy,
           subTranches: subTrancheCopy,
-          priceAvgMode: priceAvgMode,
+          priceAvgMethod: priceAvgMethod,
         } as Combo;
       }
     )
@@ -101,8 +107,8 @@ export class PriceConfirmationService {
     this.selectionFutureSubject.next(futureIds);
   }
 
-  emitPriceAvg(value: boolean) {
-    this.priceAvgSubject.next(value);
+  emitPriceAvg(value: PriceAverageMethod) {
+    this.priceAvgMethodSubject.next(value);
   }
 
   getFutures(): Future[] {
@@ -156,19 +162,32 @@ export class PriceConfirmationService {
         )
       );
 
-      attribute(f, subs, true);
+      attribute(f, subs, PriceAverageMethod.Selected);
     }
 
     return {
       futures: futures,
       subTranches: subTranche,
-      priceAvgMode: 'Selected',
+      priceAvgMethod: PriceAverageMethod.Selected,
     };
+  }
+
+  private anyItemsSelected(
+    selectedFutures: number[],
+    selectedTranches: number[]
+  ) {
+    return selectedFutures.length === 0 || selectedTranches.length === 0;
   }
 }
 
 export interface Combo {
   futures: Future[];
   subTranches: SubTranche[];
-  priceAvgMode: string;
+  priceAvgMethod: PriceAverageMethod;
+}
+
+export enum PriceAverageMethod {
+  Fifo,
+  Selected,
+  Contract,
 }
