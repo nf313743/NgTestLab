@@ -66,9 +66,9 @@ export function unAttribute(futures: Future[], subTranches: SubTranche[]) {
 }
 
 function priceAverageSelected(subTranches: SubTranche[]): void {
-  const futures = subTranches
-    .filter((x) => x.isSelected)
-    .flatMap((st) => st.futures);
+  const selectedSubTranches = subTranches.filter((x) => x.isSelected);
+
+  const futures = selectedSubTranches.flatMap((st) => st.futures);
 
   const wap = calcWap(futures, (x) => x.price);
   const clientFuturesExecutionLevel = calcWap(
@@ -81,14 +81,13 @@ function priceAverageSelected(subTranches: SubTranche[]): void {
     wap: wap,
   };
 
-  subTranches.forEach((st) => {
+  selectedSubTranches.forEach((st) => {
     st.setFromPriceAvg(values);
   });
 }
 
 function priceAverageContract(subTranches: SubTranche[]): void {
-  const futures = subTranches
-    .flatMap((st) => st.futures);
+  const futures = subTranches.flatMap((st) => st.futures);
 
   const attributedSubTranches = subTranches.filter((x) => x.futures.length > 0);
 
