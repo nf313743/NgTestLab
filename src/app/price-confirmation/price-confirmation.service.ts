@@ -126,12 +126,12 @@ export class PriceConfirmationService {
     const subTranches: SubTranche[] = subTranchesJson.map<SubTranche>(
       (x: any) => {
         const st = new SubTranche();
-        st.begTime = x.begTime;
+        st.begTime = x.begTime.substring(0, 10);
         st.clientFuturesExecutionLevel = x.clientFuturesExecutionLevel;
         st.contractualDifference = x.contractualDifference;
-        st.endTime = x.endTime;
+        st.endTime = x.endTime.substring(0, 10);
         st.futuresPremium = x.futuresPremium;
-        st.hedgeMonth = x.hedgeMonth;
+        st.hedgeMonth = x.hedgeMonth.substring(0, 10);
         st.id = x.id;
         st.invoicePrice = x.invoicePrice;
         st.pricedLots = x.pricedLots;

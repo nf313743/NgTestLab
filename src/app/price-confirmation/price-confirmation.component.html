@@ -18,6 +18,7 @@
                 <th></th>
                 <th>Id</th>
                 <th>Split From</th>
+                <th>Prompt</th>
                 <th>Lots</th>
                 <th>Price</th>
                 <th>Futures Price With Offset</th>
@@ -35,6 +36,7 @@
                 </td>
                 <td>{{ f.controls.id.value }}</td>
                 <td>{{ f.controls.splitFrom.value }}</td>
+                <td>{{ f.controls.prompt.value.substring(0, 10) }}</td>
                 <td>{{ f.controls.lots.value }}</td>
                 <td>{{ f.controls.price.value }}</td>
                 <td>{{ f.controls.futuresPriceWithOffset.value }}</td>
@@ -87,6 +89,9 @@
                 <th></th>
                 <th>Id</th>
                 <th>Quantity</th>
+                <th>Begin Time</th>
+                <th>End Time</th>
+                <th>Hedge Month</th>
                 <th>Priced Lots</th>
                 <th>Unpriced Lots</th>
                 <th>WAP</th>
@@ -112,6 +117,9 @@
                   }}
                 </td>
                 <td>{{ f.controls.quantity.value }}</td>
+                <td>{{ f.controls.begTime.value }}</td>
+                <td>{{ f.controls.endTime.value }}</td>
+                <td>{{ f.controls.hedgeMonth.value }}</td>
                 <td>{{ f.controls.pricedLots.value }}</td>
                 <td>{{ f.controls.unpricedLots.value }}</td>
                 <td>{{ f.controls.wap.value }}</td>
