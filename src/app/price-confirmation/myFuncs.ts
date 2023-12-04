@@ -87,10 +87,10 @@ function priceAverageSelected(subTranches: SubTranche[]): void {
 }
 
 function priceAverageContract(subTranches: SubTranche[]): void {
-
   const futures = subTranches
-    //.filter((x) => x.isSelected) -- Is the only difference this bit?
     .flatMap((st) => st.futures);
+
+  const attributedSubTranches = subTranches.filter((x) => x.futures.length > 0);
 
   const wap = calcWap(futures, (x) => x.price);
   const clientFuturesExecutionLevel = calcWap(
@@ -103,7 +103,7 @@ function priceAverageContract(subTranches: SubTranche[]): void {
     wap: wap,
   };
 
-  subTranches.forEach((st) => {
+  attributedSubTranches.forEach((st) => {
     st.setFromPriceAvg(values);
   });
 }

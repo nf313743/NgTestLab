@@ -61,18 +61,17 @@ export class PriceConfirmationService {
 
         const subTrancheCopy = subTranches.map((x) => x.clone());
 
+        selectedSubTranches!.forEach((id) => {
+          const foo = subTrancheCopy.filter((x) => x.id === id)!;
+          foo.forEach((x) => (x.isSelected = true));
+        });
+
         if (this.anyItemsSelected(selectedFutures, selectedSubTranches))
           return {
             futures: futuresCopy,
             subTranches: subTrancheCopy,
             priceAvgMethod: priceAvgMethod,
           } as Combo;
-
-        selectedSubTranches!.forEach((id) => {
-          const foo = subTrancheCopy.filter((x) => x.id === id)!;
-          foo.forEach((x) => (x.isSelected = true));
-          return foo;
-        });
 
         const selectedFuturesCopy = futuresCopy.filter((x) => x.isSelected)!;
 
@@ -156,11 +155,16 @@ export class PriceConfirmationService {
     if (this.preSelectedFutureIds) {
       const f = futures.filter((x) => this.preSelectedFutureIds.includes(x.id));
 
-      const subs = subTranche.filter((x) =>
-        this.preSelectedSubTranches.includes(
-          x.trancheNum.toString() + x.subTrancheChar
+      const subs = subTranche
+        .filter((x) =>
+          this.preSelectedSubTranches.includes(
+            x.trancheNum.toString() + x.subTrancheChar
+          )
         )
-      );
+        .map((x) => {
+          x.isSelected = true;
+          return x;
+        });
 
       attribute(f, subs, PriceAverageMethod.Selected);
     }
