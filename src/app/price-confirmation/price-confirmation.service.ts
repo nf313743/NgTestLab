@@ -73,11 +73,9 @@ export class PriceConfirmationService {
             priceAvgMethod: priceAvgMethod,
           } as Combo;
 
-        const selectedFuturesCopy = futuresCopy.filter((x) => x.isSelected)!;
+        unAttribute(futuresCopy, subTrancheCopy);
 
-        unAttribute(selectedFuturesCopy, subTrancheCopy);
-
-        attribute(selectedFuturesCopy, subTrancheCopy, priceAvgMethod);
+        attribute(futuresCopy, subTrancheCopy, priceAvgMethod);
 
         return {
           futures: futuresCopy,
@@ -166,7 +164,11 @@ export class PriceConfirmationService {
           return x;
         });
 
+      f.forEach((x) => (x.isSelected = true));
+
       attribute(f, subs, PriceAverageMethod.Selected);
+
+      f.forEach((x) => (x.isSelected = false));
     }
 
     return {

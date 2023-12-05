@@ -9,6 +9,9 @@ export function attribute(
   for (let i = 0; i < futures.length; i++) {
     const f = futures[i];
 
+    // Need this here because we need to mutate the list past in.
+    if (!f.isSelected) continue;
+
     subTranches
       .filter((x) => x.isSelected)
       .forEach((st) => {
@@ -32,6 +35,8 @@ export function attribute(
               id: -1,
               lots: Math.abs(remainingLots),
               splitFrom: f.id,
+              isAllocated: false,
+              isSelected: true,
             };
 
             st.addFuture(f);
@@ -53,13 +58,15 @@ export function attribute(
 export function unAttribute(futures: Future[], subTranches: SubTranche[]) {
   // For each future remove from existing.  They can always be re-added after.
 
+  const selectedFutures = futures.filter((x) => x.isSelected);
+
   subTranches.forEach((st) => {
-    futures.forEach((f) => {
+    selectedFutures.forEach((f) => {
       st.removeFuture(f);
     });
   });
 
-  futures.forEach((f) => {
+  selectedFutures.forEach((f) => {
     f.isAllocated = false;
     f.allocatedTo = '';
   });
